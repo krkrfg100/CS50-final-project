@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block title %} sleep cycle {% endblock %}
+
+
+{% block head %}<link rel="icon"  href="/static/icons/page icon/sleeping.ico">{% endblock %}
+
+
+{%block body%}
+
+<style>
+
+    body{
+        text-align: center;
+        background-image: url("/static/images/sleep\ background.jpg");
+    }
+    h1, p {
+        color:white
+    }
+    p{
+        margin-left: 20%;
+        margin-right: 20%;
+        border-style: double;
+        border-width: 5px;
+        border-color: aliceblue;
+        padding: 10px;
+    }
+
+    form{
+        direction: rtl;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 3%;
+    }
+
+    .div{
+        margin-top: 6%;
+        margin-left: 40%;
+        background-color: #87469c73;
+        display: block;
+        align-items: center;
+        height: 400px;
+        width: 400px;
+        border-radius: 20px;
+    }
+    button{
+        margin-top: 5%;
+        background-color: #ffc107;
+    }
+    h3{
+        color: white;
+        padding-top: 10%;
+    }
+    select{
+        margin-bottom: 2%;
+    }
+</style>
+
+{% endblock %}
+
+{% block main %}
+
+    <h1> Check which sleep cycle is right for you </h1>
+
+    <p>Sleep is essential for human health and well-being. Sleep cycles consist of recurring patterns that a person goes through during sleep. The identification of sleep cycles refers to the different stages of sleep that a person goes through during the night. Healthy sleep cycles typically consist of five main stages, ranging from light sleep to deep sleep.
+
+        The benefits of sleep cycles include helping in the restoration of the body and mind and improving overall health. Here are some key benefits:
+        <br>
+        <br>
+        1.Body restoration: Sleep helps in tissue renewal and cell repair in the body, promotes muscle growth, and aids in its enhancement.<br>
+        2.Mental health enhancement: Good sleep improves memory, concentration, and alertness, contributes to mood regulation, and reduces the risk of depression and anxiety.</br>
+        3.Immune system support: Healthy sleep strengthens the immune system and increases the body's resistance to diseases and inflammation.<br>
+        4.Physical and athletic performance boost: Good sleep enhances physical and athletic performance, increases the abiilty to focus and coordinate movements.<br>
+        5.General health support: Lack of sleep is associated with increased risks of heart disease, stroke, obesity, diabetes, and other chronic conditions.<br>
+        
+        
+        Sleep cycle identification can be done in several ways. Sleep monitoring devices can be used to track sleep patterns and provide insights into the different stages of sleep.
+    </p>
+         
+         
+         <div class="div">
+            <h3> What time do you want to get up? </h3>
+                <label style="color: white;">
+                    How many hours do you want to sleep?
+                    For your information, the selected list is based on complete sleep cycles           
+            
+            <form method="POST">
+                <select name="select">
+                <option value="12:0">12</option>
+                <option value="10:30">10:30</option>
+                <option value="9:0">9</option>
+                <option value="7:30">7:30</option>
+            </select>
+                <label> To determine when to get up </label>
+                <input type="time" name="time"  >
+                <button class="button" type="submit"> check</button>
+            </form>
+
+            <p> {{masseg}} <span style="color:#ffc107"> {{hour}} </span></p>
+         </div>
+{% endblock %}
+

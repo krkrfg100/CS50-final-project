@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title %} weather logs  {% endblock %}
+
+
+{% block head %}<link rel="icon"  href="/static/icons/logs.ico">{% endblock %}
+
+
+
+{%block body%}
+
+
+<style>
+
+    body{
+        background-image: url("/static/images/pexels-pixabay-531767.jpg");
+        display: flex;
+        justify-content: center;
+    }
+    h1{
+        color: white;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+    }
+
+    .content-table{
+
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        min-width: 400px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .content-table thead tr {
+
+        background-color: #244d72;
+        color: white;
+        text-align: left;
+        font-weight: bold;
+
+    }
+
+    .content-table th,
+    .content-table td{
+        padding: 12px 15px;
+        font-family: 'Courier New', Courier,;
+    }
+
+    .content-table tbody tr{
+
+        border-bottom: 1px solid white;
+        background-color: #3b6d9b;
+        color: #ffbe37;
+    }
+
+    .content-table tbody tr:nth-of-type(even){
+        background-color: #1f4364a4;
+    }
+
+    .content-table tbody tr:list-of-type{
+
+        border-bottom: 2px solid #74512d;
+    }
+
+</style>
+{% endblock %}
+
+{% block main %}
+
+ <h1> Weather Logs</h1>
+<table class="content-table">
+
+    <thead>
+    <tr>
+        <th> weather condition</th> 
+        <th> city name</th>
+        <th> country name </th>
+        <th> temperature </th>
+        <th> image </th>
+        <th> Query history </th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        
+       {% for Data in data %}         
+       <tr>
+           <td>{{ Data.weather_condition }}</td>
+           <td> {{ Data.city_name }} </td>
+           <td> {{ Data.country_name }} </td>
+           <td> {{ Data.temperature }} <span>&#8451;</span></td>
+           <td> <img style="width: 30px;" class="weather-image" src="/static/images/weather image/{{Data.image}}.png"></td>
+           <td> {{ Data.Query_history }} </td>
+       </tr>
+     {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}
+

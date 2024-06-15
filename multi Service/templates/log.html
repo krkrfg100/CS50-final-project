@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block title %} log {% endblock %}
+
+{% block head %}<link rel="icon"  href="/static/icons/page icon/icons8-log-100.ico">{% endblock %}
+
+{%block body%}
+
+<style>
+    body{
+        background-image: url("/static/images/log_background.gif");
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    main{
+        margin-top: 25%;
+    }
+    button{
+        margin-left: 50px;
+        height: 58px;
+        width: 200px;
+        background-size: 400px 142px;
+        padding-top: 0;
+        padding-left: 9px;
+        padding-right: 8px;   
+    }
+
+
+    .item_1 {
+        background-color: #87469c;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        transform: translateZ(0);
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+        transition-duration: 0.3s;
+      }
+      
+      .item_1:hover {
+        cursor: pointer;
+        transform: translateZ(30px);
+        box-shadow: 0 0 20px rgb(236, 12, 12);
+      }
+
+      .item_2 {
+        background-color: #3e90c6;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        transform: translateZ(0);
+        box-shadow: 0 0 1px  rgba(0, 0, 0, 0);
+        transition-duration: 0.3s;
+      }
+      
+      .item_2:hover {
+        cursor: pointer;
+        transform: translateZ(30px);
+        box-shadow: 0 0 20px #ffbe31;
+      }
+
+
+      .item_3 {
+        background-color: #b2c574;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        transform: translateZ(0);
+        box-shadow: 0 0 1px  rgba(0, 0, 0, 0);
+        transition-duration: 0.3s;
+      }
+      
+      .item_3:hover {
+        cursor: pointer;
+        transform: translateZ(30px);
+        box-shadow: 0 0 20px #4edb23;
+      }
+   
+</style>
+
+{% endblock %}
+
+{% block main %}
+
+    <div class="buttons">
+
+      <a href="/sleep_log">
+        <button class="item_1">Sleep</button>  
+      </a>
+
+      <a href="/weather_log">
+        <button class="item_2">weathr</button>
+      </a>
+
+      <a href="/to_do_list_log">
+        <button class="item_3">to do list</button>
+      </a>
+
+    </div>
+{% endblock %}
+

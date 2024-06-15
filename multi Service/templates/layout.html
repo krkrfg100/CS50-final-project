@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+    {% block head %} {%endblock%}
+    
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+
+
+  {% block style %}    
+    <style>:root {
+      --background: #19145a;
+      --icon-color: #344955;
+      --width: 50px;
+      --height: 50px;
+      --border-radius: 100%;
+    }
+    
+    .wrapper {
+      position: fixed;
+      top: 25%;
+      left: 3%;
+      z-index: 9999;
+      width: var(--width);
+      height: var(--height);
+      border-radius: var(--border-radius);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 6rem;
+      
+      .fab {
+        background: var(--background);
+        width: var(--width);
+        height: var(--height);
+        position: relative;
+        z-index: 3;
+        border-radius: var(--border-radius);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fab-animation-reverse 0.4s ease-out forwards;
+        
+        &::before,
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          border-radius: 4px;
+          background: #fff;
+        }
+        
+        &::before {
+          width: 4px;
+          height: 18px;
+        }
+        
+        &::after {
+          width: 18px;
+          height: 4px;
+        }
+      }
+      
+      .fac {
+  
+        width: 32px;
+        border-radius: 64px;
+        position: absolute;
+        background: #fff;
+        z-index: 2;
+        padding: 0.5rem 0.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        top: -110px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        transition: opacity 0.2s ease-in, top 0.2s ease-in, width 0.1s ease-in;
+        
+        /*&::after {
+          content: "";
+          width: 20px;
+          height: 20px;
+          background: #fff;
+          border-radius: 3px;
+          position: absolute;
+          left: 50%;
+          margin-left: -10px;
+          bottom: -8px;
+          transform: rotate(45deg);
+          z-index: 0;
+        }*/
+        
+        a {
+          color: var(--icon-color);
+          opacity: 0.8;
+          
+          &:hover {
+            transition: 0.2s;
+            opacity: 1;
+            color: darken(#344955, 2%);
+          }
+        }
+      }
+      
+      #input1 {
+        height: 100%;
+        width: 100%;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        position: absolute;
+        z-index: 5;
+        opacity: 0;
+        
+        &:checked {
+          ~ .fab {
+            animation: fab-animation 0.4s ease-out forwards;
+          }
+          
+          ~ .fac {
+            width: 32px;
+            height: 150px;
+            animation: fac-animation 0.4s ease-out forwards 0.1s;
+            top: -180px;
+            opacity: 1;
+          }
+        }
+      }
+    }
+    
+    @keyframes fab-animation {
+      0% {
+        transform: rotate(0) scale(1);
+      }
+      20% {
+        transform: rotate(60deg) scale(0.93);
+      }
+      55% {
+        transform: rotate(35deg) scale(0.97);
+      }
+      80% {
+        transform: rotate(48deg) scale(0.94);
+      }
+      100% {
+        transform: rotate(45deg) scale(0.95);
+      }
+    }
+    
+    @keyframes fab-animation-reverse {
+      0% {
+        transform: rotate(45deg) scale(0.95);
+      }
+      20% {
+        transform: rotate(-15deg);
+      }
+      55% {
+        transform: rotate(10deg);
+      }
+      80% {
+        transform: rotate(-3deg);
+      }
+      100% {
+        transform: rotate(0) scale(1);
+      }
+    }
+    
+    @keyframes fac-animation {
+      0% {
+        transform: scale(1, 1);
+      }
+      33% {
+        transform: scale(0.95, 1.05);
+      }
+      66% {
+        transform: scale(1.05, 0.95);
+      }
+      100% {
+        transform: scale(1, 1);
+      }
+    }
+    </style>
+    {%endblock%}
+    <style>
+
+      .navbar ul
+      {
+        list-style-type: none;
+        background-color: brown;
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+
+      }
+      .navbar a{
+        color: wheat;
+        text-decoration: none;
+        padding: 15px;
+        display:block;
+
+      }
+      .navbar a:hover{
+         background-color: rgb(124, 33, 33);
+      }
+      .navbar li{
+        float: left;
+      }
+
+    </style>
+
+    <style>
+
+      .errors
+      {
+        margin-bottom: 10px;
+        background-color: #ff9ca4;
+        width: 40%;
+        height: 30px;
+        border-radius: 5px;
+      }
+
+      .h3-r{
+        padding: 5px;
+      }
+    </style>
+
+</head>
+
+<body>
+
+
+
+    {% if session["user_id"] %}
+    <div class="wrapper">
+      <input id="input1" style="margin-top: 300px;" type="checkbox" />
+      <div class="fab" style="margin-top: 300px;"></div>
+      <div class="fac" style="height: 300px;">
+        <a href="/"><i class="fas fa-suitcase"></i><img src="/static/icons/page icon/home.png" style="width: 40px;"></a>
+        <a href="/calculator"><i class="fas fa-suitcase"></i><img src="/static/icons/calculator.png" style="width: 40px;"></a>
+        <a href="/weather-news"><i class="fas fa-suitcase"></i><img src="/static/icons/weather-news.png" style="width: 40px;"></a>
+        <a  href="/sleep" ><i class="fas fa-suitcase" ></i><img src="/static/icons/sleep.png" style="width: 40px;"></a>
+        <a href="/log"><i class="fas fa-suitcase"></i><img src="/static/icons/log.png" style="width: 40px;"></a>
+        <a  href="/logout" ><i class="fas fa-suitcase" ></i><img src="/static/icons/logout.png" style="width: 40px;"></a>
+      </div>
+    </div>    
+    {% else %}
+    <nav class="navbar">
+      <ul id="ul">
+          <li class="li"><a class="a" href="/register">Register</a></li>
+          <li class="li"><a class="a" href="/login">Login</a></li>
+      </ul>
+    </nav>
+    {% endif %}
+
+    <main>
+       
+        {% block main %}{% endblock %}
+    </main>
+    <footer>
+    </footer>
+    {% block body %}{% endblock %}
+
+    <script>
+      function sandClickEvent(){
+
+
+        
+      }
+    </script>
+</body>
+
+</html>

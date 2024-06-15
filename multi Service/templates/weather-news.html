@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block title %} weather-news {% endblock %}
+
+{% block head %}<link rel="icon"  href="/static/icons/page icon/icons8-thermometer-64.ico">{% endblock %}
+
+{%block body%}
+<style>
+
+    @font-face {
+        font-family: 'title';
+        src: url('static\\fonts\\Jacquard24-Regular.ttf') format('truetype');
+    
+    
+      }
+
+    body{
+        background-image: url("/static/images/pexels-pixabay-531767.jpg");
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .title{
+        color: aliceblue;
+        margin-top: 100px;
+   
+
+    }
+
+    .box{
+
+       
+        display: flex;
+        justify-content: center;
+        background-color: rgba(31, 35, 73, 0.349);
+        width: 500px;
+        height: 500px;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 15px;
+
+    }
+
+    .weather-image{
+        width: 100px;
+        height: 100px;
+        
+
+    }
+
+    #item{
+
+        margin-top: 10px;
+    }
+    .info{
+
+        display: flex;
+        margin-top: 6%;
+        margin-bottom: 6%;
+    }
+    #infoi
+    {
+        margin-left: 10px;
+        border-width: 2px;
+        padding: 5px;
+        border-style: solid;
+        border-color: white;
+        font-family: cursive;
+        color: #ffbe31;
+    }
+</style>
+
+{% endblock %}
+
+{% block main %}
+
+    <h1 class="title"> weather news </h1>
+
+    <div class="box">
+
+   
+
+       <img id="item" class="weather-image" src="/static/images/weather image/{{image}}.png">
+       <div class="info">
+            <p id="infoi">{{weather}}</p>
+            <p id="infoi">{{ city_name }}</p>
+            <p id="infoi">{{ temperature }} <span>&#8451;</span> </p>
+            <p id="infoi">{{ country_name }}</p>
+        </div>
+
+
+
+    <form method="POST">
+       <input id="item" name="weather"  placeholder="Enter city name" type="text">
+       <button id="item" type="submit" > Search </button>
+    </form>
+
+
+    </div>
+{% endblock %}
+

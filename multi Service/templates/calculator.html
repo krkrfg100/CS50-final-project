@@ -1,0 +1,695 @@
+{% extends "layout.html" %}
+
+{% block title %} calculatror {% endblock %}
+
+{% block head %}<link rel="icon"  href="/static/icons/page icon/icons8-calculator-48.ico">{% endblock %}
+
+
+{%block body%}
+
+
+
+<style>
+/*/ style for 3d button /*/
+button.big-button {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: var(--colorShadeA);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: inherit;
+}
+
+button.big-button {
+  padding: 1em 2em;
+  border: 2px solid var(--colorShadeA);
+  border-radius: 1em;
+  background: var(--colorShadeE);
+  transform-style: preserve-3d;
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+}
+button.big-button::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--colorShadeC);
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.75em 0 0 var(--colorShadeA);
+  transform: translate3d(0, 0.75em, -1em);
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+}
+
+button.big-button:hover {
+  background: var(--colorShadeD);
+  transform: translate(0, 0.375em);
+}
+
+button.big-button:hover::before {
+  transform: translate3d(0, 0.75em, -1em);
+}
+
+button.big-button:active {
+  transform: translate(0em, 0.75em);
+}
+
+button.big-button:active::before {
+  transform: translate3d(0, 0, -1em);
+
+  box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.25em 0 0 var(--colorShadeB);
+}
+
+:root {
+    --backgroundColor: rgba(246, 241, 209);
+    --colorShadeA: rgb(106, 163, 137);
+    --colorShadeB: rgb(121, 186, 156);
+    --colorShadeC: rgb(150, 232, 195);
+    --colorShadeD: rgb(187, 232, 211);
+    --colorShadeE: rgb(205, 255, 232);
+  }
+  
+  @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+  * {
+    box-sizing: border-box;
+  }
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+</style>
+
+{% block style %}
+
+<style>:root {
+  --background: #19145a;
+  --icon-color: #344955;
+  --width: 50px;
+  --height: 50px;
+  --border-radius: 100%;
+}
+
+.wrapper {
+  position: fixed;
+  top: 25%;
+  left: 3%;
+  z-index: 9999;
+  width: var(--width);
+  height: var(--height);
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6rem;
+  
+  .fab {
+    background: var(--background);
+    width: var(--width);
+    height: var(--height);
+    position: relative;
+    z-index: 3;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fab-animation-reverse 0.4s ease-out forwards;
+    
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      border-radius: 4px;
+      background: #fff;
+    }
+    
+    &::before {
+      width: 4px;
+      height: 18px;
+    }
+    
+    &::after {
+      width: 18px;
+      height: 4px;
+    }
+  }
+  
+  .fac {
+
+    width: 32px;
+    border-radius: 64px;
+    position: absolute;
+    background: #fff;
+    z-index: 2;
+    padding: 0.5rem 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    top: -110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    transition: opacity 0.2s ease-in, top 0.2s ease-in, width 0.1s ease-in;
+    
+    /*&::after {
+      content: "";
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 3px;
+      position: absolute;
+      left: 50%;
+      margin-left: -10px;
+      bottom: -8px;
+      transform: rotate(45deg);
+      z-index: 0;
+    }*/
+    
+    a {
+      color: var(--icon-color);
+      opacity: 0.8;
+      
+      &:hover {
+        transition: 0.2s;
+        opacity: 1;
+        color: darken(#344955, 2%);
+      }
+    }
+  }
+  
+  #input1 {
+    height: 100%;
+    width: 100%;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    position: absolute;
+    z-index: 5;
+    opacity: 0;
+    
+    &:checked {
+      ~ .fab {
+        animation: fab-animation 0.4s ease-out forwards;
+      }
+      
+      ~ .fac {
+        width: 50px;
+        height: 150px;
+        animation: fac-animation 0.4s ease-out forwards 0.1s;
+        top: -180px;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@keyframes fab-animation {
+  0% {
+    transform: rotate(0) scale(1);
+  }
+  20% {
+    transform: rotate(60deg) scale(0.93);
+  }
+  55% {
+    transform: rotate(35deg) scale(0.97);
+  }
+  80% {
+    transform: rotate(48deg) scale(0.94);
+  }
+  100% {
+    transform: rotate(45deg) scale(0.95);
+  }
+}
+
+@keyframes fab-animation-reverse {
+  0% {
+    transform: rotate(45deg) scale(0.95);
+  }
+  20% {
+    transform: rotate(-15deg);
+  }
+  55% {
+    transform: rotate(10deg);
+  }
+  80% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes fac-animation {
+  0% {
+    transform: scale(1, 1);
+  }
+  33% {
+    transform: scale(0.95, 1.05);
+  }
+  66% {
+    transform: scale(1.05, 0.95);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+</style>
+{% endblock %}
+
+<style>
+  
+  /*/ style for calculator /*/
+  @font-face {
+    font-family: 'Calculator';
+    src: url('static\\fonts\\Calculator.ttf') format('truetype');
+
+
+  }    
+    body{
+        background-color: mistyrose;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .calculator{
+
+        background-color: #b2f8d7;
+        width: 700px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content: center;
+        border-radius: 7%;
+        border: 2px solid black;
+        box-shadow: -20px 20px 0 #83dbb3;
+        margin-top: 20%;
+       
+    
+    }
+    .item{
+        padding: 10px;
+    }
+
+    .buttons{
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        height: 400px;
+        width: 600px;
+    }
+
+    .result{
+        background-color: #667f65;
+        height: 7%;
+        width: 80%;
+        border-radius: 20px;
+        margin-top: -13%;
+        
+      
+    }
+
+    #result{
+      direction: rtl;
+      padding-right: 15px;
+      font-family: 'Calculator';
+      font-weight: bold;
+      font-size: large;
+    }
+    #del{
+      margin-top: 10px;
+    }
+
+    
+</style>
+
+
+
+<style>
+/*/ style for select  Section/*/
+
+.select-container{
+  text-align: center;
+  margin-top:10%;
+  position:relative;
+  min-width: 250px;
+  height: 25px;  
+  font-family: cursive;
+  color: #667f65;
+
+  
+}
+
+.select-box{
+  border: none;
+  appearance: none;
+  padding: 0 30px 0 15px;
+  width: 100%;
+  color: black;
+  background-color:#83dbb3;
+  font-size: 20px;
+  
+}
+
+.OUT{
+
+  margin-top: 20px;
+  padding-bottom: 10%;
+}
+
+</style>
+
+{% endblock %}
+
+{% block main %}
+
+
+
+<div class="calculator">
+
+    <div class="result"><p id="result"></p></div>
+    
+
+    <div class="buttons">
+       
+        <div class="item"><button class="big-button" onclick="insert(7);">7</button></div>
+        <div class="item"><button class="big-button" onclick="insert(8);">8</button></div>
+        <div class="item"><button class="big-button" onclick="insert(9);">9</button></div>
+        <div class="item"><button class="big-button" onclick="insert('/');">÷</button></div>
+        <div class="item"><button class="big-button" onclick="insert(4);">4</button></div>
+        <div class="item"><button class="big-button" onclick="insert(5);">5</button></div>
+        <div class="item"><button class="big-button" onclick="insert(6);">6</button></div>
+        <div class="item"><button class="big-button" onclick="insert('*');">×</button></div>
+        <div  class="item"><button class="big-button" onclick="insert(1);">1</button></div>
+        <div class="item"><button class="big-button" onclick="insert(2);">2</button></div>
+        <div class="item"><button class="big-button" onclick="insert(3);">3</button></div>
+        <div class="item"><button class="big-button" onclick="insert('-');">-</button></div>
+        <div  class="item"><button class="big-button" onclick="insert(0);">0</button></div>
+        <div class="item"><button class="big-button" onclick="insert('.');">.</button></div>
+        <div class="item"><button class="big-button" onclick="insert('%');">%</button></div>
+        <div class="item"><button class="big-button" onclick="insert('+');">+</button></div>
+        <div id="del"><button class="big-button" onclick="del()">del</button></div>
+        <div class="item"><button class="big-button" onclick="clean()">C</button></div>
+        <div class="item"><button class="big-button" onclick="Calculate('=');">=</button></div>
+        
+    </div>
+    
+</div>
+
+
+
+
+<div class="select-container"  > 
+
+  <h1> Convert units</h1>
+  <select class="select-box" id="firstSelect">
+    <option value="millimeter" selected>Millimeter</option>
+    <option value="centimeter">Centimeter</option>
+    <option value="kilometer">Kilometer</option>
+    <option value="meter">Meter</option>
+    <option value="mile">Mile</option>
+    <option value="yard">Yard</option>
+    <option value="foot">Foot</option>
+    <option value="inch">Inch</option>
+
+
+
+  </select>
+
+  to
+
+  <select class="select-box" id="SacandSelect">
+
+    <option value="millimeter">Millimeter</option>
+    <option value="centimeter" selected>Centimeter</option>
+    <option value="kilometer">Kilometer</option>
+    <option value="meter">Meter</option>
+    <option value="mile">Mile</option>
+    <option value="yard">Yard</option>
+    <option value="foot">Foot</option>
+    <option value="inch">Inch</option>
+
+  </select>
+
+  <div class="OUT">
+
+    <input type="number"  onchange="units(this.value)" min="0">
+    <input id="output" style="pointer-events: none;" placeholder="output">
+  </div>
+</div>
+
+ 
+</div>
+
+<script>
+
+  // caculator script
+  let result = document.getElementById("result");
+  let list = "";
+  
+  // Function to insert numbers into the list
+  function insert(num) {
+    list += num;
+    result.innerHTML = list;
+    console.log(list);
+  }
+  
+  // Function to calculate the result
+  function Calculate(event) {
+    if (event == "=") {
+      try {
+        result.innerHTML = eval(list);
+        list = eval(list);
+        console.log(list);
+      } catch (error) {
+        list = "";
+        result.innerHTML = "Error";
+      }
+    } else {
+      return;
+    }
+  }
+  
+  // Function to delete the last character from the list
+  function del() {
+    list = list.slice(0, -1);
+    result.innerHTML = list;
+  }
+  
+  // Function to clear the list
+  function clean() {
+    list = "";
+    result.innerHTML = list;
+  }
+
+</script>
+
+<script>
+
+
+  let input = document.getElementById("output");
+  var firstSelect = document.getElementById("firstSelect");
+  var SacandSelect = document.getElementById("SacandSelect");
+function units(num){
+
+  //millimeter===============================================================
+    if(firstSelect.value == "millimeter" && SacandSelect.value == "centimeter"){
+
+      input.placeholder = num /10;
+    }
+    else if(firstSelect.value == "millimeter" && SacandSelect.value == "meter"){
+
+      input.placeholder = num /1000;
+    }
+    else if(firstSelect.value == "millimeter" && SacandSelect.value == "kilometer"){
+
+      input.placeholder = num /1000000;
+    }
+    else if(firstSelect.value == "millimeter" && SacandSelect.value == "mile"){
+
+      input.placeholder = num /1609340;
+    }
+    else if(firstSelect.value == "millimeter" && SacandSelect.value == "yard"){
+
+      input.placeholder = num /914.4;
+    }
+    else if(firstSelect.value == "millimeter" && SacandSelect.value == "foot"){
+
+      input.placeholder = num /304.8;
+    }
+    else if(firstSelect.value == "millimeter" && SacandSelect.value == "inch"){
+
+      input.placeholder = num /25.4;
+    }
+//=========================================================================================
+
+  //centimeter===============================================================
+  if(firstSelect.value == "centimeter" && SacandSelect.value == "millimeter"){
+
+    input.placeholder = num *10;
+  }
+  else if(firstSelect.value == "centimeter" && SacandSelect.value == "meter"){
+
+    input.placeholder = num /100;
+  }
+  else if(firstSelect.value == "centimeter" && SacandSelect.value == "kilometer"){
+
+    input.placeholder = num /100000;
+  }
+  else if(firstSelect.value == "centimeter" && SacandSelect.value == "mile"){
+
+    input.placeholder = num /160934;
+  }
+  else if(firstSelect.value == "centimeter" && SacandSelect.value == "yard"){
+
+    input.placeholder = num /91.44;
+  }
+  else if(firstSelect.value == "centimeter" && SacandSelect.value == "foot"){
+
+    input.placeholder = num /30.48;
+  }
+  else if(firstSelect.value == "centimeter" && SacandSelect.value == "inch"){
+
+    input.placeholder = num /2.54;
+  }
+//=========================================================================================
+
+
+ //centimeter===============================================================
+ if(firstSelect.value == "meter" && SacandSelect.value == "millimeter"){
+
+  input.placeholder = num *1000;
+}
+else if(firstSelect.value == "meter" && SacandSelect.value == "centimeter"){
+
+  input.placeholder = num *100;
+}
+else if(firstSelect.value == "meter" && SacandSelect.value == "kilometer"){
+
+  input.placeholder = num /1000;
+}
+else if(firstSelect.value == "meter" && SacandSelect.value == "mile"){
+
+  input.placeholder = num /1609.34;
+}
+else if(firstSelect.value == "meter" && SacandSelect.value == "yard"){
+
+  input.placeholder = num *1.0936;
+}
+else if(firstSelect.value == "meter" && SacandSelect.value == "foot"){
+
+  input.placeholder = num *3.2808;
+}
+else if(firstSelect.value == "meter" && SacandSelect.value == "inch"){
+
+  input.placeholder = num *39.3701;
+}
+//=========================================================================================
+
+
+// kilometer ===============================================================
+if (firstSelect.value == "kilometer" && SacandSelect.value == "millimeter") {
+  input.placeholder = num * 1000000;
+} else if (firstSelect.value == "kilometer" && SacandSelect.value == "centimeter") {
+  input.placeholder = num * 100000;
+} else if (firstSelect.value == "kilometer" && SacandSelect.value == "meter") {
+  input.placeholder = num * 1000;
+} else if (firstSelect.value == "kilometer" && SacandSelect.value == "mile") {
+  input.placeholder = num * 0.621371;
+} else if (firstSelect.value == "kilometer" && SacandSelect.value == "yard") {
+  input.placeholder = num * 1093.61;
+} else if (firstSelect.value == "kilometer" && SacandSelect.value == "foot") {
+  input.placeholder = num * 3280.84;
+} else if (firstSelect.value == "kilometer" && SacandSelect.value == "inch") {
+  input.placeholder = num * 39370.1;
+}
+
+// mile ===============================================================
+if (firstSelect.value == "mile" && SacandSelect.value == "millimeter") {
+  input.placeholder = num * 1609340;
+} else if (firstSelect.value == "mile" && SacandSelect.value == "centimeter") {
+  input.placeholder = num * 160934;
+} else if (firstSelect.value == "mile" && SacandSelect.value == "meter") {
+  input.placeholder = num * 1609.34;
+} else if (firstSelect.value == "mile" && SacandSelect.value == "kilometer") {
+  input.placeholder = num * 1.60934;
+} else if (firstSelect.value == "mile" && SacandSelect.value == "yard") {
+  input.placeholder = num * 1760;
+} else if (firstSelect.value == "mile" && SacandSelect.value == "foot") {
+  input.placeholder = num * 5280;
+} else if (firstSelect.value == "mile" && SacandSelect.value == "inch") {
+  input.placeholder = num * 63360;
+}
+
+// yard ===============================================================
+if (firstSelect.value == "yard" && SacandSelect.value == "millimeter") {
+  input.placeholder = num * 914.4;
+} else if (firstSelect.value == "yard" && SacandSelect.value == "centimeter") {
+  input.placeholder = num * 91.44;
+} else if (firstSelect.value == "yard" && SacandSelect.value == "meter") {
+  input.placeholder = num * 0.9144;
+} else if (firstSelect.value == "yard" && SacandSelect.value == "kilometer") {
+  input.placeholder = num * 0.0009144;
+} else if (firstSelect.value == "yard" && SacandSelect.value == "mile") {
+  input.placeholder = num * 0.000568182;
+} else if (firstSelect.value == "yard" && SacandSelect.value == "foot") {
+  input.placeholder = num * 3;
+} else if (firstSelect.value == "yard" && SacandSelect.value == "inch") {
+  input.placeholder = num * 36;
+}
+
+// foot ===============================================================
+if (firstSelect.value == "foot" && SacandSelect.value == "millimeter") {
+  input.placeholder = num * 304.8;
+} else if (firstSelect.value == "foot" && SacandSelect.value == "centimeter") {
+  input.placeholder = num * 30.48;
+} else if (firstSelect.value == "foot" && SacandSelect.value == "meter") {
+  input.placeholder = num * 0.3048;
+} else if (firstSelect.value == "foot" && SacandSelect.value == "kilometer") {
+  input.placeholder = num * 0.0003048;
+} else if (firstSelect.value == "foot" && SacandSelect.value == "mile") {
+  input.placeholder = num * 0.000189394;
+} else if (firstSelect.value == "foot" && SacandSelect.value == "yard") {
+  input.placeholder = num * 0.333333;
+} else if (firstSelect.value == "foot" && SacandSelect.value == "inch") {
+  input.placeholder = num * 12;
+}
+
+
+// inch ===============================================================
+if (firstSelect.value == "inch" && SacandSelect.value == "millimeter") {
+    input.placeholder = num * 25.4;
+  } else if (firstSelect.value == "inch" && SacandSelect.value == "centimeter") {
+    input.placeholder = num * 2.54;
+  } else if (firstSelect.value == "inch" && SacandSelect.value == "meter") {
+    input.placeholder = num * 0.0254;
+  } else if (firstSelect.value == "inch" && SacandSelect.value == "kilometer") {
+    input.placeholder = num * 0.0000254;
+  } else if (firstSelect.value == "inch" && SacandSelect.value == "mile") {
+    input.placeholder = num * 0.000015783;
+  } else if (firstSelect.value == "inch" && SacandSelect.value == "yard") {
+    input.placeholder = num * 0.0277778;
+  } else if (firstSelect.value == "inch" && SacandSelect.value == "foot") {
+    input.placeholder = num * 0.0833333;
+  }
+
+
+    if(firstSelect.value == SacandSelect.value){
+
+      input.placeholder = num;
+    }
+
+  }
+</script>
+{% endblock %}
+

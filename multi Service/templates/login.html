@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block title %} login {% endblock %}
+
+{% block head %}<link rel="icon"  href="/static/icons/page icon/icons8-login-48.ico">{% endblock %}
+
+{%block body%}
+
+    <style>
+        body{
+         text-align: -webkit-center;
+        }
+        
+        .pushable {
+            background: hsl(340deg 100% 32%);
+            border-radius: 12px;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            outline-offset: 4px;
+        }
+        .front {
+            display: block;
+            padding: 12px 42px;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            background: hsl(345deg 100% 47%);
+            color: white;
+            transform: translateY(-6px);
+        }
+
+        .pushable:active .front {
+            transform: translateY(-2px);
+        }
+    </style>
+    <style>
+        form{
+            margin-top: 10%;
+            border: 10px solid transparent;
+            border-color: rgb(0, 0, 0);
+            width: 20%;
+        }
+        form div{
+            padding: 15px;
+        }
+
+        body{
+            background-color: antiquewhite;
+        }
+    </style>
+
+{% endblock %}
+
+{% block main %}
+
+    
+    <form action="/login" method="POST">
+        <h2> Login </h2>
+        <div>
+            <h4> username </h4>
+            <input name="username" type="text">
+        </div>
+        <div>
+            <h4> password </h4>
+            <input name="password" type="password">
+        </div>
+
+        <div>
+            <button class="pushable" type="submit"><span class="front">Submit</span></button>
+        </div>
+    </form>
+
+
+{% endblock %}
+

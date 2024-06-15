@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block title %} weather logs  {% endblock %}
+
+
+{% block head %}<link rel="icon"  href="/static/icons/logs.ico">{% endblock %}
+
+
+
+{%block body%}
+
+
+<style>
+
+    body{
+        background-image: url("/static/images/pexels-harrisonhaines-3536278.jpg");
+        display: flex;
+        justify-content: center;
+    }
+    h1{
+        color: white;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+    }
+
+    .content-table{
+
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        min-width: 400px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .content-table thead tr {
+
+        background-color: #140d50;
+        color: white;
+        text-align: left;
+        font-weight: bold;
+
+    }
+
+    .content-table th,
+    .content-table td{
+        padding: 12px 15px;
+        font-family: 'Courier New', Courier,;
+    }
+
+    .content-table tbody tr{
+
+        border-bottom: 1px solid white;
+        background-color: #504063;
+        color: gold;
+    }
+
+    .content-table tbody tr:nth-of-type(even){
+        background-color: #47246e;
+    }
+
+    .content-table tbody tr:list-of-type{
+
+        border-bottom: 2px solid #74512d;
+    }
+
+</style>
+{% endblock %}
+
+{% block main %}
+
+ <h1> Sleep cycles Logs</h1>
+<table class="content-table">
+
+    <thead>
+    <tr>
+        <th> Desired wake up time</th> 
+        <th> system 12 hour</th>
+        <th> system 24 hour</th>
+        <th> Query history </th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+        
+       {% for Data in data %}         
+       <tr>
+           <td>{{ Data.Desired_wake_up_time }}</td>
+           <td> {{ Data.system_12_hour }} </td>
+           <td> {{ Data.system_24_hour }} </td>
+           <td> {{ Data.Query_history }} </td>
+       </tr>
+     {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}
+

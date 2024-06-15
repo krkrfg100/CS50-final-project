@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+
+{% block title %} To Do List logs  {% endblock %}
+
+
+{% block head %}<link rel="icon"  href="/static/icons/logs.ico">{% endblock %}
+
+
+
+{%block body%}
+
+
+<style>
+
+    body{
+        background-color: #b2c574;
+        display: flex;
+        justify-content: center;
+    }
+    h1{
+        color: white;
+        font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+    }
+
+    .content-table{
+
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        min-width: 400px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .content-table thead tr {
+
+        background-color: #74512d;
+        color: white;
+        text-align: left;
+        font-weight: bold;
+
+    }
+
+    .content-table th,
+    .content-table td{
+        padding: 12px 15px;
+        font-family: 'Courier New', Courier,;
+    }
+
+    .content-table tbody tr{
+
+        border-bottom: 1px solid white;
+        background-color: #af8f6f;
+    }
+
+    .content-table tbody tr:nth-of-type(even){
+        background-color: #f8f4e1;
+    }
+
+    .content-table tbody tr:list-of-type{
+
+        border-bottom: 2px solid #74512d;
+    }
+
+</style>
+{% endblock %}
+
+{% block main %}
+
+ <h1> TO DO List logs</h1>
+<table class="content-table">
+
+    <thead>
+    <tr>
+        <th> Content </th>
+        <th> Done </th>
+        <th> Deleted </th>
+        <th> Date_created </th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+
+       {% for Data in data %}         
+        <tr>
+            <td>{{ Data.Content }}</td>
+            <td> {{ Data.done }} </td>
+            <td> {{ Data.deleted }} </td>
+            <td> {{ Data.Date_created }} </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
+

@@ -1,0 +1,131 @@
+{%extends "layout.html"%}
+
+{%block title%}home{%endblock%}
+
+{% block head %}<link rel="icon"  href="/static/icons/page icon/home.ico">{% endblock %}
+
+{%block body%}
+
+
+<style>
+    
+    body{
+        background-color: #b2c574;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .tdl{
+        background-color: #ffffff;
+    }
+
+    .continer{
+
+        margin-top: 20px;
+        border-radius: 10px;
+        min-width: 500px;
+        text-align: center;
+        background-color: #F8F4E1;
+    }
+
+    .todo{
+        
+        padding: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .button{
+        
+        --background-color: #AF8F6F;
+        --background-color-dark: #74512D;
+
+        display: inline-block;
+        font-family: 'Boogalo', cursive;
+        font-size: 24px;
+        color: #ffffff;
+        text-decoration: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        background-color: var(--background-color);
+        box-shadow: 6px 6px 0 var(--background-color-dark);
+    }
+    .button:active{
+
+        transform: translateX(2px) translateY(2px)
+        
+    }
+    .todo p,
+    .todo form {
+        display: inline;
+    }
+
+    .title{
+        color: #006769;
+        font-family: cursive;
+    }
+
+    p ,del{
+        font-family: 'Courier New', Courier, monospace;
+        font-size: x-large;
+    }
+
+    .myinput{
+        color: #CAF4FF;
+        background-color: #A67B5B;
+        width: 250px;
+        height: 30px;
+        border: #9DDE8B;
+        border-radius: 5px;
+        font-size: x-large; 
+    }
+</style>
+
+{% endblock %}
+
+{%block main%}
+
+    <h1 class="title"> TO DO LIST</h1>
+        <form action="{{ url_for('index') }}", method="POST">
+            <input class="myinput" type="text" placeholder="add todo" name="todo_name">
+            <button style="background-color: rgba(255, 255, 255, 0); border:#5AB2FF" type="submit"><img src="/static/images/plus.png" height="25px"></button>
+        </form>
+
+        
+    <div class="continer">
+        {% for todo in todos %}
+            <div class="todo">
+
+                <form   action="{{ url_for('checkBox') }}" method="POST"><input  id="i{{todo.done}}" type="checkbox" name="checkBox" value="{{todo.id}},!@#$%^&*(sosossdfs222)" onclick="submit()"></form>
+                <p  id="p{{todo.done}}">{{todo.Content}} </p>
+                <form action="{{ url_for('delete') }}" method="POST"><button class="button" type="submit" value="{{todo.id}},!@#$%^&*(sosossdfs222){{todo.Content}}" name="delete">delete</button></form>
+                
+            </div>
+               
+        {% endfor %}
+    </div>
+    
+
+    <script>
+
+        //This function converts anything that has these hands to del so that a line comes in the middle of the text
+        var elements = document.querySelectorAll('#pTrue');
+        elements.forEach(function(element) {
+            var delElement = document.createElement("del");
+            delElement.innerHTML = element.innerHTML;
+            element.parentNode.replaceChild(delElement, element);
+           
+        });
+
+
+        //This function disables any button that holds iTrue hands
+        var checkbox = document.querySelectorAll('#iTrue');
+        checkbox.forEach(function(checkbox) {
+
+            checkbox.disabled = true;
+           });
+    </script>
+{% endblock %}
